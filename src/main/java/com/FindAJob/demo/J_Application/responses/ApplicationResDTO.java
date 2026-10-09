@@ -4,10 +4,11 @@ import com.FindAJob.demo.J_Application.publicenum.AppStatus;
 import com.FindAJob.demo.J_Application.domain.entities.Application;
 
 import java.time.Instant;
+import java.util.UUID;
 
 public record ApplicationResDTO(
-        Long jobId,
-        Long userId,
+        UUID jobId,
+        UUID userId,
         String info,
         Instant applied_at,
         AppStatus status

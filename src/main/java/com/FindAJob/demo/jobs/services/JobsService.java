@@ -21,10 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class JobsService {
@@ -84,7 +81,7 @@ public class JobsService {
     }
 
 // Get job by Id
-    public JobResponseDTO getAJob(Long id) {
+    public JobResponseDTO getAJob(UUID id) {
 
         Optional<Jobs> job = Optional.of(repository.findById(id).
                 orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Job not found!")));
@@ -155,7 +152,7 @@ public class JobsService {
 //Update Job Details
 
 
-    public JobResponseDTO updateJob(JobRequestDTO request, Long id){
+    public JobResponseDTO updateJob(JobRequestDTO request, UUID id){
 
        Optional<Jobs> optionaljob = repository.findById(id);
 
@@ -183,7 +180,7 @@ public class JobsService {
 
     //Set Availability status
 
-    public JobResponseDTO setAvailabilityStatus(Long id, JobAvailReqDTO req){
+    public JobResponseDTO setAvailabilityStatus(UUID id, JobAvailReqDTO req){
 
       Jobs job = repository.findById(id)
               .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Job not found!"));
@@ -206,7 +203,7 @@ public class JobsService {
     
 //Delete job
 
-    public JobResponseDTO deleteJob(Long id){
+    public JobResponseDTO deleteJob(UUID id){
 
         Optional<Jobs> job = Optional.of(repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Job not found")));
@@ -391,7 +388,7 @@ public class JobsService {
 
     }
 
-    public Jobs getJob(Long id){
+    public Jobs getJob(UUID id){
      return repository.findById(id).
              orElseThrow(() -> new RuntimeException("Job not found"));
     };

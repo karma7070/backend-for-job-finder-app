@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/app/users")
@@ -21,7 +22,7 @@ public class Reg_UserController {
     }
 
     @GetMapping(path = "/userById/{id}")
-    public Reg_UserResponseDTO getUserByID(@PathVariable Long id){
+    public Reg_UserResponseDTO getUserByID(@PathVariable UUID id){
 
         return service.getUserByID(id);
     }
@@ -45,13 +46,13 @@ public class Reg_UserController {
 
     @PatchMapping(path = "/update/{id}")
     public Reg_UserResponseDTO updateUser(@RequestBody Reg_UserRequestDTO request,
-                                          @PathVariable Long id){
+                                          @PathVariable UUID id){
 
         return service.updateUser(request, id);
     }
 
     @DeleteMapping (path = "/delete/{id}")
-    public Reg_UserResponseDTO deleteUser(@PathVariable Long id){
+    public Reg_UserResponseDTO deleteUser(@PathVariable UUID id){
 
         return service.deleteUser(id);
     }

@@ -6,6 +6,7 @@ import com.FindAJob.demo.jobs.publicenums.JobAvailability;
 import com.FindAJob.demo.jobs.publicenums.JobFields;
 
 import java.time.Instant;
+import java.util.UUID;
 
 public record JobResponseDTO (
         String job_title,
@@ -15,7 +16,7 @@ public record JobResponseDTO (
         JobAvailability availability,
         Instant posted_at,
         String posted_by,
-        Long compId){
+        UUID compId){
 
     public static JobResponseDTO from(Jobs job){
 

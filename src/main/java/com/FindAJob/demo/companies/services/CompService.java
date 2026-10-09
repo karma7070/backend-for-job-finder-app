@@ -17,10 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CompService {
@@ -69,7 +66,7 @@ public class CompService {
     }
 
     //Get company by ID
-    public CompResponseDTO getCompByID(Long id){
+    public CompResponseDTO getCompByID(UUID id){
         Companies comp = serv_repository.findById(id)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found"));
 
@@ -132,7 +129,7 @@ public class CompService {
 
     //Update Company details
 
-    public CompResponseDTO updateCompany(CompRequestDTO request, Long id){
+    public CompResponseDTO updateCompany(CompRequestDTO request, UUID id){
         Optional<Companies> opt_comp1 = serv_repository.findById(id);
 
             if(opt_comp1.isEmpty()){
@@ -148,7 +145,7 @@ public class CompService {
 
 
     //Delete Company by id
-    public CompResponseDTO deleteCompany(Long id){
+    public CompResponseDTO deleteCompany(UUID id){
         Companies comp = serv_repository.findById(id)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found!"));
 
@@ -233,7 +230,7 @@ public class CompService {
 
     //Job uses this to get company
 
-    public Companies getCompById(Long id){
+    public Companies getCompById(UUID id){
        Optional <Companies> comp = Optional.of(serv_repository.findById(id)
                .orElseThrow(()-> new UsernameNotFoundException("User does not exist")));
 

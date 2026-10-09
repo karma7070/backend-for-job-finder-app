@@ -1,17 +1,21 @@
 package com.FindAJob.demo.notifications;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.UUID;
 
 @Entity
+@Table(name = "notifications")
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id", nullable = false, unique = true)
+    private UUID id;
 
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "email", nullable = false)
     private String email;
 
     public Notification (String name, String email){
@@ -25,7 +29,7 @@ public class Notification {
 
     }
 
-    public Long getId(){
+    public UUID getId(){
         return id;
     }
 

@@ -10,19 +10,35 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
+@Table(name = "regular_users")
 public class Reg_Users implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id", nullable = false, unique = true)
+    private UUID id;
 
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "age", nullable = false)
     private Integer age;
+
+    @Column(name = "gender", nullable = false)
     private Gen_Type gender;
+
+    @Column(name = "profession", nullable = false)
     private String profession;
+
+    @Column(name = "email", nullable = false)
     private String email;
+
+    @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "roles", nullable = false)
     private UserRoles roles;
 
     public Reg_Users(String name,
@@ -44,7 +60,7 @@ public class Reg_Users implements UserDetails {
 
     }
 
-    public Long getId(){
+    public UUID getId(){
         return id;
     }
 

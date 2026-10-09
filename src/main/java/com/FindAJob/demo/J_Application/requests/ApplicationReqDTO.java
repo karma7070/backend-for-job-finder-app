@@ -1,8 +1,10 @@
 package com.FindAJob.demo.J_Application.requests;
 
+import java.util.UUID;
+
 public record ApplicationReqDTO(
-        Long jobId,
-        Long userId,
+        UUID jobId,
+        UUID userId,
         String info
 ) {
 

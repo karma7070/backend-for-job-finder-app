@@ -8,6 +8,7 @@ import org.springframework.modulith.events.ApplicationModuleListener;
 import org.springframework.stereotype.Component;
 
 import java.io.PrintStream;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 @Component
@@ -22,7 +23,7 @@ public class CompanyListener {
     @ApplicationModuleListener
     public void on(JobDeletedEvent event){
         String msg = "Job DELETED";
-        Long id = event.id();
+        UUID id = event.id();
 
         System.out.println(msg);
         System.out.println(id);

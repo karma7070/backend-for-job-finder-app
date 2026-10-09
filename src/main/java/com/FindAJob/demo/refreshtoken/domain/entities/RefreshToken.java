@@ -6,22 +6,32 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @Entity
+@Table(name = "refresh_tokens")
 public class RefreshToken {
     @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id", nullable = false, unique = true)
+    private UUID id;
 
+    @Column(name = "token", nullable = false, unique = true)
     private String token;
+
+    @Column(name = "expires_at", nullable = false)
     private Instant expiresAt;
+
+    @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
     @ManyToOne
+    @JoinColumn(name = "regular_users_id", nullable = false, unique = true)
     private Reg_Users user;
 
     @ManyToOne
+    @JoinColumn(name = "company_id", nullable = false, unique = true)
     private Companies comp;
 
     public RefreshToken(String token,
@@ -51,7 +61,7 @@ public class RefreshToken {
 
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 

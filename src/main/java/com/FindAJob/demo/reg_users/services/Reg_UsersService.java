@@ -17,10 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class Reg_UsersService {
@@ -67,7 +64,7 @@ public class Reg_UsersService {
     }
 
     //Get user by ID
-    public Reg_UserResponseDTO getUserByID(Long id){
+    public Reg_UserResponseDTO getUserByID(UUID id){
         Reg_Users user = userRepository.findById(id)
                 .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
 
@@ -125,7 +122,7 @@ public class Reg_UsersService {
 
 //Update User info
 
-    public Reg_UserResponseDTO updateUser(Reg_UserRequestDTO request, Long id){
+    public Reg_UserResponseDTO updateUser(Reg_UserRequestDTO request, UUID id){
         //add empty request exception handler
 
         Optional<Reg_Users> opt_user1 = userRepository.findById(id);
@@ -142,7 +139,7 @@ public class Reg_UsersService {
     }
 //Delete user
 
-    public Reg_UserResponseDTO deleteUser(Long id){
+    public Reg_UserResponseDTO deleteUser(UUID id){
        Reg_Users user = userRepository.findById(id)
            .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
 
@@ -253,7 +250,7 @@ public class Reg_UsersService {
         return user;
     }
 
-    public Reg_Users getUser(Long id){
+    public Reg_Users getUser(UUID id){
         return userRepository.findById(id).
                 orElseThrow(() -> new RuntimeException("User not Found"));
     }

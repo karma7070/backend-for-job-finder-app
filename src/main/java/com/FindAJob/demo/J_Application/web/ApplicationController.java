@@ -7,6 +7,7 @@ import com.FindAJob.demo.J_Application.services.ApplicationService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/app/application")
@@ -47,7 +48,7 @@ public class ApplicationController {
     //company sets status i.e approves or denies or...
     @PatchMapping(path = "/company_assesses/{id}")
     public ApplicationResDTO setStatus(@RequestBody AppStatusDTO appStatus,
-                                       @PathVariable Long id){
+                                       @PathVariable UUID id){
 
         return service.setStatus(appStatus, id);
     }

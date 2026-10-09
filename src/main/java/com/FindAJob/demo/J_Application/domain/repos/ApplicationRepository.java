@@ -5,11 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
-public interface ApplicationRepository extends JpaRepository<Application, Long> {
+public interface ApplicationRepository extends JpaRepository<Application, UUID> {
 
     List<Application> findAllByUserEmail(String email);
 
-    Application findApplicationByJobIdAndUserId(Long id, Long id2);
+    Application findApplicationByJobIdAndUserId(UUID id, UUID id2);
 }

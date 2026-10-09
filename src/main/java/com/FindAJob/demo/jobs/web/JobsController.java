@@ -7,6 +7,7 @@ import com.FindAJob.demo.jobs.services.JobsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/app/jobs")
@@ -29,7 +30,7 @@ public class JobsController {
   }
 
   @GetMapping(path = "/one/{id}")
-    public JobResponseDTO getAJob(@PathVariable Long id){
+    public JobResponseDTO getAJob(@PathVariable UUID id){
 
     return service.getAJob(id);
   }
@@ -47,20 +48,20 @@ public class JobsController {
   }
 
   @PatchMapping(path = "/update")
-    public JobResponseDTO updateJobDetails(@RequestBody JobRequestDTO request, Long id){
+    public JobResponseDTO updateJobDetails(@RequestBody JobRequestDTO request, UUID id){
 
     return service.updateJob(request, id);
   }
 
   @PatchMapping(path = "/setAvailStatus/{id}")
-  public JobResponseDTO setAvailability(@PathVariable Long id,
+  public JobResponseDTO setAvailability(@PathVariable UUID id,
                                         @RequestBody JobAvailReqDTO req){
 
     return service.setAvailabilityStatus(id, req);
   }
 
   @DeleteMapping(path = "/delete/{id}")
-  public JobResponseDTO deleteJob(@PathVariable Long id){
+  public JobResponseDTO deleteJob(@PathVariable UUID id){
 
     return service.deleteJob(id);
   }

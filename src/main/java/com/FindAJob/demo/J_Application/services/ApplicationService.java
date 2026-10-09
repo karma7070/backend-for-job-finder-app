@@ -19,10 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ApplicationService {
@@ -150,7 +147,7 @@ public class ApplicationService {
 
 //Company approves/denies application
 
-    public ApplicationResDTO setStatus(AppStatusDTO appStatus, Long id){
+    public ApplicationResDTO setStatus(AppStatusDTO appStatus, UUID id){
 
         Optional<Application> apn = repository.findById(id);
 
@@ -180,7 +177,7 @@ public class ApplicationService {
 
     //update application
 
-    public ApplicationResDTO updateApp(ApplicationReqDTO req, Long id){
+    public ApplicationResDTO updateApp(ApplicationReqDTO req, UUID id){
         Application app = repository.findById(id)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Application does not exist"));
 

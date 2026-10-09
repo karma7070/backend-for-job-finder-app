@@ -7,23 +7,39 @@ import com.FindAJob.demo.jobs.publicenums.JobFields;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @Entity
+@Table(name = "jobs")
 public class Jobs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id", nullable = false, unique = true)
+    private UUID id;
 
+    @Column(name = "job_title", nullable = false)
     private String jobTitle;
+
+    @Column(name = "description", nullable = false)
     private String description;
+
+    @Column(name = "salary")
     private Double salary;
+
+    @Column(name = "field", nullable = false)
     private JobFields field;
+
+    @Column(name = "availability")
     private JobAvailability availability;
+
+    @Column(name = "posted_at", nullable = false)
     private Instant posted_at;
+
+    @Column(name = "posted_by", nullable = false)
     private String posted_by;
 
-
     @ManyToOne
+    @JoinColumn(name = "company_id", nullable = false, unique = true)
     private Companies company;
 
     public Jobs(String jobTitle,
@@ -48,7 +64,7 @@ public class Jobs {
 
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 

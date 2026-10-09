@@ -1,7 +1,9 @@
 package com.FindAJob.demo.J_Application.events;
 
-public record ApplicationMadeEvent(Long id,
-                                   Long id2,
+import java.util.UUID;
+
+public record ApplicationMadeEvent(UUID id,
+                                   UUID id2,
                                    String info) {
 
 }

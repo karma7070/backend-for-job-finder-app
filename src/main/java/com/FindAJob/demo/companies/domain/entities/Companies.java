@@ -10,26 +10,33 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
+@Table(name = "companies_or_employers")
 public class Companies implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id", nullable = false, unique = true)
+    private UUID id;
 
     @Valid
+    @Column(name = "comp_name", nullable = false, unique = true)
     private String comp_name;
 
     @Valid
+    @Column(name = "location")
     private String location;
 
-    @Column(name = "compemail")
+    @Column(name = "comp_email", nullable = false)
     private String compEmail;
 
     @Valid
+    @Column(name = "password", nullable = false)
     private String password;
 
     @Valid
+    @Column(name = "role", nullable = false)
     private UserRoles role;
 
     public Companies(String comp_name,
@@ -48,7 +55,7 @@ public class Companies implements UserDetails {
 
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 

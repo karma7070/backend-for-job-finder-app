@@ -6,22 +6,31 @@ import com.FindAJob.demo.reg_users.domain.entities.Reg_Users;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @Entity
+@Table(name = "applications")
 public class Application {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long apnId;
+    @Column(name = "id", nullable = false, unique = true)
+    private UUID apnId;
 
     @ManyToOne
+    @JoinColumn(name = "job_id", nullable = false, unique = true)
     private Jobs job;
 
     @ManyToOne
+    @JoinColumn(name = "regular_users_id", nullable = false, unique = true)
     private Reg_Users user;
 
-    @Column(nullable = false)
+    @Column(name = "info", nullable = false)
     private String info;
+
+    @Column(name = "applied_at", nullable = false)
     private Instant applied_at;
+
+    @Column(name = "status", nullable = false)
     private AppStatus status;
 
     public Application(Jobs job, Reg_Users user, String info, Instant applied_at, AppStatus status){
@@ -36,7 +45,7 @@ public class Application {
 
     }
 
-    public Long getId() {
+    public UUID getId() {
         return apnId;
     }
 
