@@ -1,8 +1,5 @@
 package com.FindAJob.demo.SecurityPackage;
 
-import com.FindAJob.demo.companies.Companies;
-import com.FindAJob.demo.refreshtoken.internal.RefreshService;
-import com.FindAJob.demo.reg_users.Reg_Users;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,7 +9,6 @@ import org.jspecify.annotations.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -20,7 +16,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 @Component
 @Slf4j
@@ -28,7 +23,6 @@ public class AuthFilter extends OncePerRequestFilter {
 
     private final JWTService jwtSvc;
     private final CustomUserDetailsService userDetServ;
-    private static String compTok;
 
 
     public AuthFilter(JWTService jwtSvc,

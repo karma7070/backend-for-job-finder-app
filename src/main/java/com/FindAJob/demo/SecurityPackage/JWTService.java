@@ -70,7 +70,7 @@ public class JWTService {
             Jwts.parser()
                     .verifyWith(getKey())//verifies signature authenticity
                     .build()
-                    .parseSignedClaims(token); // checks if it has expired
+                    .parseSignedClaims(token); // checks if it has expired  by converting it back
 
             return true;
         } catch (Exception e){

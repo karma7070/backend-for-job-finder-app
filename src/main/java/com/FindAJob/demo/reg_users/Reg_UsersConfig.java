@@ -1,13 +1,13 @@
 package com.FindAJob.demo.reg_users;
 
 import com.FindAJob.demo.SecurityPackage.UserRoles;
-import com.FindAJob.demo.reg_users.internal.Reg_UsersRepository;
+import com.FindAJob.demo.reg_users.domain.entities.Reg_Users;
+import com.FindAJob.demo.reg_users.domain.repos.Reg_UsersRepository;
+import com.FindAJob.demo.reg_users.publicenums.Gen_Type;
 import org.jspecify.annotations.NonNull;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 

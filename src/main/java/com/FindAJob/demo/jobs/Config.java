@@ -1,11 +1,17 @@
 package com.FindAJob.demo.jobs;
 
-import com.FindAJob.demo.companies.internal.CompService;
-import com.FindAJob.demo.companies.Companies;
-import com.FindAJob.demo.jobs.internal.JobsRepository;
+import com.FindAJob.demo.SecurityPackage.UserRoles;
+import com.FindAJob.demo.companies.domain.repos.CompRepository;
+import com.FindAJob.demo.companies.services.CompService;
+import com.FindAJob.demo.companies.domain.entities.Companies;
+import com.FindAJob.demo.jobs.domain.repos.JobsRepository;
+import com.FindAJob.demo.jobs.domain.entities.Jobs;
+import com.FindAJob.demo.jobs.publicenums.JobAvailability;
+import com.FindAJob.demo.jobs.publicenums.JobFields;
 import org.jspecify.annotations.NonNull;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.Instant;
 import java.util.List;
@@ -16,18 +22,30 @@ public class Config implements CommandLineRunner {
 
     private final JobsRepository repository;
     private final CompService compserv;
+    private final PasswordEncoder passWE;
+    private final CompRepository cRepo;
 
-    public Config(JobsRepository repository, CompService compserv){
+    public Config(JobsRepository repository, CompService compserv, PasswordEncoder passWE, CompRepository cRepo){
         this.repository = repository;
         this.compserv = compserv;
 
+        this.passWE = passWE;
+        this.cRepo = cRepo;
     }
 
     @Override
     public void run(String @NonNull ... args) throws Exception {
         if(repository.count() == 0){
 
-            Optional<Companies> comp = Optional.ofNullable(compserv.getCompById(1L));
+            Optional<Companies> comp = Optional.of(new Companies(
+                    "Google",
+                    "Mountain View, California",
+                    "careers@google.com",
+                    passWE.encode("njcalmlkds"),
+                    UserRoles.Company
+            ));
+
+            cRepo.save(comp.get());
 
                 List<Jobs> jobs = List.of(
                         //this is how u enter elements into an array, either this oe for loops

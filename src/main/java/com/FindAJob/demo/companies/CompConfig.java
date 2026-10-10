@@ -1,7 +1,8 @@
 package com.FindAJob.demo.companies;
 
 import com.FindAJob.demo.SecurityPackage.UserRoles;
-import com.FindAJob.demo.companies.internal.CompRepository;
+import com.FindAJob.demo.companies.domain.repos.CompRepository;
+import com.FindAJob.demo.companies.domain.entities.Companies;
 import org.jspecify.annotations.NonNull;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -25,13 +26,7 @@ public class CompConfig implements CommandLineRunner{
   public void run(String @NonNull ... args) throws Exception {
     if(comprepo.count() == 0){//counts number of rows in a table and if there are non it inserts data else... yknow.
         List<Companies> companies = List.of(
-                new Companies(
-                        "Google",
-                        "Mountain View, California",
-                        "careers@google.com",
-                        passWE.encode("njcalmlkds"),
-                        UserRoles.Company
-                ),
+
 
                 new Companies(
                         "Microsoft",

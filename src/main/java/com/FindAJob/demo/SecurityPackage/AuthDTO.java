@@ -1,5 +1,11 @@
 package com.FindAJob.demo.SecurityPackage;
 
-public record AuthDTO (String email,
-                       String password){
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+
+public record AuthDTO (
+        @Email(message ="valid Email")
+        String email,
+       @NotNull(message = "Password is required")
+       String password){
 }
