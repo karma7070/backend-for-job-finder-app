@@ -6,7 +6,7 @@ CREATE TABLE companies_or_employers(
     comp_name           VARCHAR(100)        NOT NULL,
     location            VARCHAR(100)        NOT NULL ,
     comp_email          VARCHAR(100)        NOT NULL ,
-    password            VARCHAR(50)         NOT NULL ,
+    password            VARCHAR(100)         NOT NULL ,
     role                VARCHAR(10)         NOT NULL ,
 
     CONSTRAINT  pk_companies_or_employers   PRIMARY KEY (id),
@@ -18,17 +18,17 @@ CREATE INDEX    idx_companies_or_employers_id           ON companies_or_employer
 CREATE INDEX    idx_companies_or_employers_comp_name    ON companies_or_employers(comp_name);
 CREATE INDEX    idx_companies_or_employers_comp_email   ON companies_or_employers(comp_email);
 
---regular users or job-seekers table
+--regular users or jobseekers table
 
 CREATE TABLE regular_users(
 
     id                  UUID                 NOT NULL ,
     name                VARCHAR(100)         NOT NULL ,
-    age                 INTEGER(7)           NOT NULL,
+    age                 INTEGER              NOT NULL,
     gender              VARCHAR(15)          NOT NULL ,
     profession          VARCHAR(50)          NOT NULL ,
     email               VARCHAR(50)          NOT NULL ,
-    password            VARCHAR(50)          NOT NULL ,
+    password            VARCHAR(100)          NOT NULL ,
     roles               VARCHAR(50)          NOT NULL ,
 
     CONSTRAINT pk_regular_users              PRIMARY KEY (id),
@@ -48,7 +48,7 @@ CREATE TABLE jobs(
     id                  UUID                NOT NULL ,
     job_title           VARCHAR(50)         NOT NULL ,
     description         VARCHAR(255)        NOT NULL ,
-    salary              VARCHAR(20)         DEFAULT "Negotiable",
+    salary              DOUBLE PRECISION,
     field               VARCHAR(20)         NOT NULL ,
     availability        VARCHAR(20)         NOT NULL ,
     posted_at           TIMESTAMPTZ         NOT NULL ,
@@ -56,7 +56,7 @@ CREATE TABLE jobs(
     company_id          UUID                NOT NULL ,
 
     CONSTRAINT pk_jobs                      PRIMARY KEY (id),
-    CONSTRAINT fk_jobs_companies_or_employers   FOREIGN KEY (company_id)
+    CONSTRAINT fk_jobs_companies_or_employers   FOREIGN KEY (company_id)  REFERENCES companies_or_employers (id) ON DELETE CASCADE
 );
 
 CREATE INDEX    idx_jobs_id             ON jobs(id);
@@ -76,12 +76,12 @@ CREATE TABLE applications(
     regular_users_id    UUID                NOT NULL ,
 
     CONSTRAINT pk_applications              PRIMARY KEY (id),
-    CONSTRAINT fk_applications_job_id       FOREIGN KEY (job_id),
-    CONSTRAINT fk_applications_regular_users_id     FOREIGN KEY (regular_users_id)
+    CONSTRAINT fk_applications_job_id       FOREIGN KEY (job_id)  REFERENCES jobs(id) ON DELETE CASCADE,
+    CONSTRAINT fk_applications_regular_users_id     FOREIGN KEY (regular_users_id)      REFERENCES regular_users(id)  ON DELETE CASCADE
 );
 
-CREATE INDEX idx_applications_id        ON jobs(id);
-CREATE INDEX idx_applications_status    ON jobs(status);
+CREATE INDEX idx_applications_id        ON applications(id);
+CREATE INDEX idx_applications_status    ON applications(status);
 
 
 -- refresh token table
@@ -89,20 +89,20 @@ CREATE INDEX idx_applications_status    ON jobs(status);
 CREATE TABLE refresh_tokens(
 
     id                  UUID                NOT NULL,
-    token               UUID                NOT NULL ,
-    created_at          TIMESSTAMPTZ        NOT NULL ,
+    token               VARCHAR(512)         NOT NULL ,
+    created_at          TIMESTAMPTZ         NOT NULL ,
     expires_at          TIMESTAMPTZ         NOT NULL ,
     regular_users_id    UUID                NOT NULL ,
     company_id          UUID                NOT NULL ,
 
     CONSTRAINT pk_refresh_tokens            PRIMARY KEY (id),
-    CONSTRAINT uq_refresh_tokens            UNIQUE  (tokens),
-    CONSTRAINT fk_refresh_tokens_reg_user_id        FOREIGN KEY (regular_users_id),
-    CONSTRAINT fk_refresh_tokens_comp_id    FOREIGN KEY (company_id)
+    CONSTRAINT uq_refresh_tokens            UNIQUE  (token),
+    CONSTRAINT fk_refresh_tokens_reg_user_id        FOREIGN KEY (regular_users_id)   REFERENCES  regular_users(id)  ON DELETE CASCADE,
+    CONSTRAINT fk_refresh_tokens_comp_id    FOREIGN KEY (company_id)   REFERENCES  companies_or_employers(id) ON DELETE CASCADE
 );
 
 CREATE INDEX idx_refresh_token_id       ON refresh_tokens(id);
-CREATE INDEX idx_refresh_token_token    ON refresh_tokens(tokens);
+CREATE INDEX idx_refresh_token_token    ON refresh_tokens(token);
 
 -- notifications
 

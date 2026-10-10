@@ -13,7 +13,7 @@ import java.util.UUID;
 @Table(name = "jobs")
 public class Jobs {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false, unique = true)
     private UUID id;
 
@@ -26,9 +26,11 @@ public class Jobs {
     @Column(name = "salary")
     private Double salary;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "field", nullable = false)
     private JobFields field;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "availability")
     private JobAvailability availability;
 

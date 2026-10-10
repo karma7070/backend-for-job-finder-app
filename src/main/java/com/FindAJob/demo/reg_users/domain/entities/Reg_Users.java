@@ -16,7 +16,7 @@ import java.util.UUID;
 @Table(name = "regular_users")
 public class Reg_Users implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false, unique = true)
     private UUID id;
 
@@ -26,6 +26,7 @@ public class Reg_Users implements UserDetails {
     @Column(name = "age", nullable = false)
     private Integer age;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "gender", nullable = false)
     private Gen_Type gender;
 
@@ -38,6 +39,7 @@ public class Reg_Users implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "roles", nullable = false)
     private UserRoles roles;
 

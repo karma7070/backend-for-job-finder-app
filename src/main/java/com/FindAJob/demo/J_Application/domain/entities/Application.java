@@ -12,7 +12,7 @@ import java.util.UUID;
 @Table(name = "applications")
 public class Application {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false, unique = true)
     private UUID apnId;
 
@@ -30,6 +30,7 @@ public class Application {
     @Column(name = "applied_at", nullable = false)
     private Instant applied_at;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private AppStatus status;
 

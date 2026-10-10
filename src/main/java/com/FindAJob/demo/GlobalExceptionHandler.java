@@ -1,13 +1,9 @@
 package com.FindAJob.demo;
 
 import com.FindAJob.demo.SecurityPackage.ApiResponse;
-import com.FindAJob.demo.SecurityPackage.Exceptions.ResourceNotFoundException;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -22,6 +18,12 @@ public class GlobalExceptionHandler {
                        e.getReason());
 
                 return ResponseEntity.status(e.getStatusCode()).body(error);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ApiResponse> handleAccessDenied(AccessDeniedException e) {
+        ApiResponse error = new ApiResponse(403, "FORBIDDEN", "You don't have permission to access this resource");
+        return ResponseEntity.status(403).body(error);
     }
 
 }

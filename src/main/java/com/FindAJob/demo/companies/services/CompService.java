@@ -10,6 +10,7 @@ import com.FindAJob.demo.companies.domain.repos.CompRepository;
 import com.FindAJob.demo.refreshtoken.domain.entities.RefreshToken;
 import com.FindAJob.demo.refreshtoken.domain.repos.RefreshRepository;
 import com.FindAJob.demo.refreshtoken.services.RefreshService;
+import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -124,7 +125,16 @@ public class CompService {
     }
 
     public AuthResDTO fallbacklogin(AuthDTO auth, Throwable throwable){
-        throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS, "Too many log in attempts. Please try again later.");
+
+        if (throwable instanceof RequestNotPermitted) {
+            throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS, "Too many log in attempts. Please try again later.");
+        }
+
+        if (throwable instanceof ResponseStatusException rse) {
+            throw rse; // rethrow the real error (404, 409, etc.)
+        }
+
+        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong during login");
     }
 
     //Update Company details

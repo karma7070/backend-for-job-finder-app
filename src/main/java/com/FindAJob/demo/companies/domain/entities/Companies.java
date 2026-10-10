@@ -16,7 +16,7 @@ import java.util.UUID;
 @Table(name = "companies_or_employers")
 public class Companies implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false, unique = true)
     private UUID id;
 
@@ -36,6 +36,7 @@ public class Companies implements UserDetails {
     private String password;
 
     @Valid
+    @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private UserRoles role;
 

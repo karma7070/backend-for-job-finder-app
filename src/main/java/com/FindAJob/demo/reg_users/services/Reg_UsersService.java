@@ -11,6 +11,7 @@ import com.FindAJob.demo.reg_users.domain.entities.Reg_Users;
 import com.FindAJob.demo.reg_users.domain.repos.Reg_UsersRepository;
 import com.FindAJob.demo.reg_users.requests.Reg_UserRequestDTO;
 import com.FindAJob.demo.reg_users.responses.Reg_UserResponseDTO;
+import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -117,7 +118,16 @@ public class Reg_UsersService {
     }
 
     public AuthResDTO fallbacklogin(AuthDTO auth, Throwable throwable){
-        throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS, "Too many log in attempts. Please try again later.");
+
+        if (throwable instanceof RequestNotPermitted) {
+            throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS, "Too many log in attempts. Please try again later.");
+        }
+
+        if (throwable instanceof ResponseStatusException rse) {
+            throw rse; // rethrow the real error (404, 409, etc.)
+        }
+
+        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong during login");
     }
 
 //Update User info
