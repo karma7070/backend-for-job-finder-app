@@ -101,9 +101,10 @@ public class JobsService {
             }
 
            Optional<Jobs> jobCheck = Optional.ofNullable
-                   (repository.findByJobTitle(request.job_title()));
+                   (repository.findByJobTitle(request.job_title()));//add job sku so we rely on that instead of job title to check if job exists
+                                                                    // this is dumb because multiple employers might have similar job titles and won't be able to create them
 
-            if(jobCheck.isEmpty()){
+            if(jobCheck.isPresent()){
                throw new ResponseStatusException(HttpStatus.CONFLICT,
                        "Job already exists");
             }

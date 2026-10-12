@@ -89,8 +89,6 @@ public class SecurityConfig {
 
                         //Authorized endpoints for reg_users
                         .requestMatchers("/app/users/update/{id}",
-                                "/app/users/delete/{id}",
-                                "/app/jobs/all",
                                 "/app/application/view_applications",
                                 "/app/application/apply").hasRole("Reg_User")
 
@@ -102,15 +100,21 @@ public class SecurityConfig {
                                 "/app/jobs/jobsbycompany",
                                 "/app/application/company_assesses/{id}").hasRole("Company")
 
+                        .requestMatchers(
+                                "/app/application/Adminget",
+                                "/app/refresh/deleteRefTokens"
+                        ).hasRole("Admin")
+
 
                         .requestMatchers("/app/jobs/one/{id}",
                                 "/app/jobs/all")
                         .hasAnyRole("Reg_User", "Company")
 
-                        .requestMatchers("/app/users/delete/{id}",
-                                "/app/application/Adminget",
-                                "/app/refresh/deleteRefTokens",
-                                "/app/comp/delete/{id}").hasRole("Admin")
+                        .requestMatchers("/app/comp/delete/{id}")
+                        .hasAnyRole("Company","Admin")
+
+                        .requestMatchers("/app/users/delete/{id}")
+                        .hasAnyRole("Reg_User", "Admin")
 
 
                 );

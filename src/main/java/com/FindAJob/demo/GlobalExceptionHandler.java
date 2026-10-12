@@ -20,6 +20,9 @@ public class GlobalExceptionHandler {
                 return ResponseEntity.status(e.getStatusCode()).body(error);
     }
 
+    //add this access denied to authfilter because the
+    // endpoint isn't hit without authentication so error can only be thrown there
+
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ApiResponse> handleAccessDenied(AccessDeniedException e) {
         ApiResponse error = new ApiResponse(403, "FORBIDDEN", "You don't have permission to access this resource");

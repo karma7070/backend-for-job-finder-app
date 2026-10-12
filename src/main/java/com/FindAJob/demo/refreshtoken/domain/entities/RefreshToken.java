@@ -27,11 +27,11 @@ public class RefreshToken {
     private Instant createdAt;
 
     @ManyToOne
-    @JoinColumn(name = "regular_users_id", nullable = false, unique = true)
+    @JoinColumn(name = "regular_users_id", unique = true)
     private Reg_Users user;
 
     @ManyToOne
-    @JoinColumn(name = "company_id", nullable = false, unique = true)
+    @JoinColumn(name = "company_id", unique = true)
     private Companies comp;
 
     public RefreshToken(String token,
